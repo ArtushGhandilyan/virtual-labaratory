@@ -1,0 +1,74 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close"  aria-label="Close" ng-click="dc.cancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">{{dc.title}}</h4>
+    </div>
+    <form name="newUserForm" novalidate>
+        <div class="modal-body">
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label for="firstName">First name:</label>
+                    <input type="text" id="firstName" name="firstName" class="form-control" ng-model="dc.userBean.firstName" ng-required="true"/>
+                    <span ng-messages="newUserForm.firstName.$error" ng-show="newUserForm.$submitted" class="input-error-msg">
+                        <span ng-message="required">First name is required</span>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <label for="lastName">Last name:</label>
+                    <input type="text" id="lastName" name="lastName" class="form-control" ng-model="dc.userBean.lastName" ng-required="true"/>
+                    <span ng-messages="newUserForm.lastName.$error" ng-show="newUserForm.$submitted" class="input-error-msg">
+                        <span ng-message="required">Last name is required</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" class="form-control" ng-model="dc.userBean.email"
+                       pattern="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$" ng-required="true"/>
+                <span ng-messages="newUserForm.email.$error" ng-show="newUserForm.$submitted" class="input-error-msg">
+                    <span ng-message="required">Email address is required</span>
+                    <span ng-message="pattern">Email address should have valid email format</span>
+                </span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label>Password:</label>
+                    <input type="password" class="form-control" name="password"  ng-model="dc.user.password"
+                           ng-minlength="6" ng-required="true"/>
+                    <span ng-messages="newUserForm.password.$error" ng-show="newUserForm.$submitted" class="input-error-msg">
+                        <span ng-message="required">Password is required</span>
+                        <span ng-message="minlength">Password should have at least 6 characters</span>
+                    </span>
+                </div>
+                <div class="col-md-6">
+                    <label>Confirm password:</label>
+                    <input type="password" class="form-control" name="confirmPassword"  ng-model="dc.confirmPassword"
+                           ng-minlength="6" ng-required="true" data-password-verify="dc.user.password"/>
+                    <span ng-messages="newUserForm.confirmPassword.$error" ng-show="newUserForm.$submitted" class="input-error-msg">
+                        <span ng-message="required">Confirmation password is required</span>
+                        <span ng-message="minlength">Confirmation password should have at least 6 characters</span>
+                        <span ng-message="passwordVerify">Passwords are not equal</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label>Role:</label>
+                    <select class="selectpicker form-control" title="System Administrator" ng-model="dc.user.roleId">
+                        <option value="">Select user role</option>
+                        <option value="role.id" ng-repeat="role in dc.rolesList">{{role.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" ng-click="dc.cancel()">CANCEL</button>
+            <button class="btn btn-default" type="submit" ng-click="newUserForm.$valid && dc.submit()">OK</button>
+        </div>
+    </form>
+</div>

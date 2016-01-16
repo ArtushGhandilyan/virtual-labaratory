@@ -1,0 +1,37 @@
+<div class="header-area" ng-controller="HeaderController as hc">
+    <div class="header-left">
+        <a href="/" class="hit-logo">
+            <img src="/assets/images/logo.png" alt="Home" style="height: 40px;"/>
+        </a>
+    </div>
+
+    <ul class="nav navbar-nav" ng-if="hc.showNavigationMenu()">
+        <li role="presentation" ng-if="hc.hasAccess(item)" ng-class="hc.menuClass(item.name)"
+            ng-repeat="item in hc.menuItems">
+            <a ng-href="{{item.path}}">
+                {{item.title | uppercase}}
+            </a>
+        </li>
+    </ul>
+
+    <div class="header-right" ng-if="ac.userInfo">
+        <span class="notification glyphicon glyphicon-bell">
+            <span class="number">5</span>
+        </span>
+
+        <div id="user-area" uib-dropdown>
+            <div class="img-wrap">
+                <img src="/assets/images/user-dummy.png"/>
+            </div>
+            <a href="#" class="user-name dropdown-toggle" uib-dropdown-toggle role="button" aria-haspopup="true" aria-expanded="false">
+                {{ac.userInfo.firstName}} {{ac.userInfo.lastName}}
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu uib-dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#" ng-click="hc.performLogout()" class="logout" title="Logout">Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

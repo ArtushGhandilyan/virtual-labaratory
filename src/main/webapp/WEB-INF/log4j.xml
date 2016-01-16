@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="false" threshold="debug" xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<!-- PLEASE READ DESCRIPTION BELOW BEFORE CHANGING THIS FILE -->
+	<!-- 
+Don't forget to set attribute threshold to "info" when performance is required!!
+
+The configuration file provides Log4j configuration for all the modules. In case of installation on different machines unnecessary "Appenders" and "Categories" can be removed. Nevertheless they don't mix up anything, just empty log files will be created.
+
+Each module writes LOG in it's own log file. "Additivity" is set to "false" to do not duplicate log content in the community_default file. "Community default" is used as a Root category and all undefined categories will write there! 
+The name of default appender used by Root category is very important!! It must be "default"!! Because the code checks log4j correct initialization by this appender and write the log into console if there is some problems with configuration!!
+
+All the files are located in the same directory "log", and when it is required to compile logs of different modules "cat/grep" commands can be used! 
+E.g. the command <!>cat *.log | grep "INFO"<!> displays all the Info log written by modules. 
+-->
+	<!-- 
+APPENDERS
+<<<<<>>>>>
+-->
+	<!-- 
+Default, Third party applications logs (Tomcat, Spring etc.)-->
+	<appender name="default" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Threshold" value="Info"/>
+		<param name="File" value="${catalina.home}/logs/third-party.log"/>
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p (%F:%L) - %m%n"/>
+		</layout>
+	</appender>
+
+    <appender name="spring_issues" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Threshold" value="Debug"/>
+        <param name="File" value="${catalina.home}/logs/spring-issues.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p (%F:%L) - %m%n"/>
+        </layout>
+    </appender>
+
+
+	<!--
+Data layer of application-->
+	<appender name="data" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.home}/logs/data.log"/>		
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p (%F:%L) - %m%n"/>
+		</layout>
+	</appender>		
+	<!-- 
+Service layer of application-->
+	<appender name="service" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.home}/logs/service.log"/>		
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p (%F:%L) - %m%n"/>
+		</layout>
+	</appender>			
+	<!-- 
+Security layer of application-->
+	<appender name="security" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.home}/logs/security.log"/>		
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p (%F:%L) - %m%n"/>
+		</layout>
+	</appender>			
+	<!-- 
+Application MVC -->
+	<appender name="mvc" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.home}/logs/mvc.log"/>		
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p (%F:%L) - %m%n"/>
+		</layout>
+	</appender>				
+    <appender name="sorry_page_handled" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${catalina.home}/logs/sorry_page.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p (%F:%L) - %m%n"/>
+        </layout>
+    </appender>
+	<!-- 
+General Info/Error Appender. This appender will track all Info, Error and Fatal information provided by ALL modules -->
+	<appender name="general_info" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="Info"/>
+		<param name="File" value="${catalina.home}/logs/_general_info.log"/>
+		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p (%l) - %m%n"/>
+		</layout>
+	</appender>
+    <!--
+Console appender to activate for local debugging
+    -->
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+<!-- change between Off/All to manage if all the logs should be print in console -->
+        <param name="Threshold" value="Warn"/>
+
+       <layout class="org.apache.log4j.PatternLayout">
+          <param name="ConversionPattern" value="%d %-5p (%l) - %m%n"/>
+       </layout>
+    </appender>
+
+	<!-- 
+CATEGORIES
+<<<<<>>>>>>
+-->
+	<!-- 
+Third-Party -->
+	<category name="org.apache.catalina" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="default"/>
+        <appender-ref ref="CONSOLE"/>
+	</category>
+	<!-- 
+Data Layer -->
+	<category name="com.implementhit.ems.db" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="data"/>
+		<appender-ref ref="general_info"/>
+        <appender-ref ref="CONSOLE"/>
+	</category>
+	<!-- 
+Service Layer -->
+	<category name="com.implementhit.ems.service" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="service"/>
+		<appender-ref ref="general_info"/>
+        <appender-ref ref="CONSOLE"/>
+	</category>	
+	<!-- 
+Security Layer -->
+	<category name="com.implementhit.ems.security" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="security"/>
+		<appender-ref ref="general_info"/>
+        <appender-ref ref="CONSOLE"/>
+	</category>	
+	<!-- 
+MVC -->
+	<category name="com.implementhit.ems.controllers" additivity="false">
+		<level value="DEBUG"/>
+		<appender-ref ref="mvc"/>
+		<appender-ref ref="general_info"/>
+        <appender-ref ref="CONSOLE"/>
+	</category>				
+    <category name="com.implementhit.ems.sorry_page" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="sorry_page_handled"/>
+        <appender-ref ref="general_info"/>
+        <appender-ref ref="CONSOLE"/>
+    </category>
+
+    <!--Spring Issues-->
+    <category name="org.springframework.beans.factory.support.DefaultListableBeanFactory" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="spring_issues"/>
+        <appender-ref ref="default"/>
+		<appender-ref ref="CONSOLE"/>
+	</category>
+
+
+    <category name="org.apache.ibatis" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="general_info"/>
+        <appender-ref ref="default"/>
+        <appender-ref ref="CONSOLE"/>
+    </category>
+    <category name="java.sql" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="general_info"/>
+        <appender-ref ref="default"/>
+        <appender-ref ref="CONSOLE"/>
+    </category>
+    <category name="java.sql.Statement" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="general_info"/>
+        <appender-ref ref="default"/>
+        <appender-ref ref="CONSOLE"/>
+    </category>
+
+    <!--
+Third party applications. Set the level to Debug if anything wrong with, for exmaple, Tomcat itself, or with any other third party application-->
+	<root>
+		<priority value="Debug"/>
+		<appender-ref ref="default"/>		
+		<appender-ref ref="CONSOLE"/>
+	</root>
+</log4j:configuration>

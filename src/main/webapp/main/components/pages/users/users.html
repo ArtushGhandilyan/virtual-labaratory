@@ -1,0 +1,45 @@
+<div id="center-column">
+    <div class="content-top-nav">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand" href="#">USER MANAGEMENT</span>
+                </div>
+
+                <div class="collapse navbar-collapse">
+                    <div class="nav navbar-nav navbar-right">
+                        <button type="button" ng-click="vc.openCreateUserDialog()" class="btn btn-default btn-primary">Create New</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="table-wrap">
+        <form class="form-horizontal">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in vc.usersList">
+                    <td>{{item['firstName']}} {{item['lastName']}}</td>
+                    <td>{{vc.rolesMap[item['roleId']]['name']}}</td>
+                    <td></td>
+                    <td>
+                        <a href="#" class="glyphicon glyphicon-pencil edit-row tb-btns" ng-click="vc.openEditUserDialog($event, $index)"></a>
+                        <a href="#" class="glyphicon glyphicon-remove delete-row tb-btns" ng-click="vc.openDeleteUserDialog($event, $index)"
+                           uib-tooltip="This item can't be deleted" tooltip-append-to-body="true"
+                           tooltip-enable="item['notificationDistributions'] === 0" tooltip-class="deletion-disallowed"></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

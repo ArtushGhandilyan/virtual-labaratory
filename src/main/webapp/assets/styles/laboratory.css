@@ -1,0 +1,452 @@
+body{
+    background: #f6f7f9;
+    font: 14px "Segoe UI",sans-serif;
+}
+
+h2{
+    color: #376493;
+    font-size: 28px;
+    margin: 10px 0;
+}
+
+ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.padding-none{
+    padding: 0;
+}
+
+/* here start styling for header part */
+
+.header-area{
+    padding: 0px 25px 0px;
+    background: #fff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    border-bottom: 1px solid #ecf0f5;
+    z-index: 999;
+}
+
+.fl-right{
+    float: right;
+}
+
+.hit-logo{
+    display: inline-block;
+}
+
+.header-left{
+    float: left;
+    margin-top: 6px;
+}
+
+.nav.navbar-nav{
+    margin-left: 20px;
+    font-size: large;
+}
+
+.nav.navbar-nav > li.active,
+.nav.navbar-nav > li.active > a:hover,
+.nav.navbar-nav > li.active > a:focus{
+    background: #5b90bf;
+    color: #fff;
+}
+.nav.navbar-nav > li.active > a {
+    color: #fff;
+}
+
+.header-right{
+    float: right;
+    margin-top: 12px;
+}
+
+.notification{
+    width: 32px;
+    height: 20px;
+    color: #9aaec3;
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.notification .number{
+    width: 15px;
+    height: 15px;
+    background: #ca5556;
+    position: absolute;
+    color: #fff;
+    line-height: 12px;
+    text-align: center;
+    border-radius: 50%;
+    top: -8px;
+    left: 16px;
+    font-size: 10px;
+}
+
+#user-area{
+    margin-left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 120px;
+}
+
+#user-area .dropdown-menu{
+    min-width: 100%;
+    box-shadow: rgb(178,177,177) 0 0 12px;
+    top: 34px;
+}
+
+#user-area .dropdown-toggle .caret {
+    margin-left: 12px;
+}
+
+#user-area .img-wrap{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.user-name{
+    font: 14px "Segoe UI",snas-serif;
+    color: #466383;
+    font-weight: 500;
+    vertical-align: middle;
+}
+
+.clear{
+    clear: both;
+}
+/* end of header part */
+
+/* start of home page styling */
+.home-page-wrap{
+    padding: 15px 20px;
+    width: 520px;
+}
+
+.home-page-wrap .alert{
+    margin: 5px 15px ;
+}
+
+#login_form .form-group{
+    margin-right: 0;
+    margin-left: 0;
+}
+
+#login_form{
+    padding-top: 15px;
+}
+
+form input,
+form input.form-control{
+    padding: 4px 10px;
+    border: 1px solid #999999;
+}
+
+.home-page-wrap input[type="submit"]{
+    margin-left: 0;
+    margin-bottom: 10px;
+    opacity: 1;
+    background: #7dadd7;
+}
+
+.input-error-msg{
+    color: red;
+    display: block;
+}
+
+.input-error-msg.ng-active{
+    margin-top: 4px;
+}
+
+form.ng-submitted .form-group .ng-invalid,
+form.ng-submitted .form-group .invalid {
+    border: 1px solid red;
+}
+
+.home-page-wrap .form-group input{
+    outline: none;
+    border-radius: 0;
+    max-width: 240px;
+}
+/* end of home page styling */
+
+/* here start styling for main part */
+#main{
+    height: 100vh;
+    padding-top: 51px;
+}
+
+/* here start of content top navigation part */
+
+.content-top-nav{
+    border-bottom: 1px solid #ecf0f5;
+}
+
+.content-top-nav .navbar-default{
+    margin-bottom: 0;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    margin-top: 1px;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover{
+    font-size: 24px;
+    color: #808080;
+    font-weight: 500;
+}
+
+.navbar-default .search{
+    margin: 0;
+    position: relative;
+    padding-right: 0;
+}
+
+.navbar-default .search .glyphicon-search{
+    position: absolute;
+    left: 176px;
+    font-size: 21px;
+    top: 14px;
+    font-weight: initial;
+    color: #a9bcd2;
+}
+
+.navbar-default form input{
+    padding: 15px 24px;
+    border: none;
+    border-radius: 0;
+    border-right: 1px solid transparent;
+    border-left: 1px solid #ecf0f5;
+    box-shadow: none;
+    height: auto;
+}
+
+::-webkit-input-placeholder {
+    color: #b3b3b3;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: #b3b3b3;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: #b3b3b3;
+}
+
+:-ms-input-placeholder {
+    color: #b3b3b3;
+}
+
+.content-top-nav .search input::-webkit-input-placeholder {
+    color: #b3b3b3;
+    font-style: italic;
+}
+
+.content-top-nav .search input:-moz-placeholder { /* Firefox 18- */
+    color: #b3b3b3;
+    font-style: italic;
+}
+
+.content-top-nav .search input::-moz-placeholder {  /* Firefox 19+ */
+    color: #b3b3b3;
+    font-style: italic;
+}
+
+.content-top-nav .search input:-ms-input-placeholder {
+    color: #b3b3b3;
+    font-style: italic;
+}
+
+.btn-default{
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    text-shadow: none;
+    line-height: 20px;
+    color: #fff;
+    padding: 6px 20px;
+    margin: 0;
+    background: #7dadd7;
+}
+
+.btn-default:hover,.btn-default:focus,
+.btn-default:active:hover,.btn-default:active:focus,
+.navbar-nav > li > a.btn-default:hover,
+.navbar-nav > li > a.btn-default:focus,
+#login_form .btn-default:hover,
+#login_form .btn-default:focus{
+    background: #76A5CF;
+    color: #fff;
+    text-decoration: none;
+    outline: none;
+}
+
+.btn-default .glyphicon.button-icon{
+    color: white;
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+.btn-default .glyphicon.button-icon:hover{
+    text-decoration: none;
+}
+
+.navbar-default .search .btn-default{
+    margin-left: -4px;
+    background: none;
+    padding: 14px 15px 15px;
+    position: relative;
+    bottom: -2px;
+    color: #7dadd7;
+    margin-top: -2px;
+    border: 1px solid transparent;
+    border-left: 1px solid #ECF0F5;
+}
+
+.navbar-default .search .btn-default.active{
+    border: 1px solid #7a9fc4;
+    border-bottom: 1px solid #fff;
+    box-shadow: inset 0 0 0;
+    background: #fff;
+}
+
+.navbar-nav > li.dropdown{
+    margin-left: 12px;
+}
+
+.navbar-default .navbar-nav .dropdown-toggle{
+    margin: 9px 0 0;
+}
+
+#center-column{
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-top: 20px;
+}
+
+.experiment-item{
+    width: 300px;
+    height: 160px;
+    border: solid 1px #337ab7;
+    border-radius: 7px;
+    background-color: white;
+    text-align: center;
+    line-height: 160px;
+    font-weight: bold;
+    font-size: x-large;
+    margin: 5px;
+}
+
+.styled-checkbox,.styled-radio{
+    position: relative;
+    min-height: 24px;
+}
+
+.styled-checkbox label,
+.styled-radio label{
+    position: relative;
+    padding-left: 6px;
+    max-width: 400px;
+}
+
+.styled-checkbox label:before,
+.styled-checkbox label::before,
+.styled-radio label:before,
+.styled-radio label::before{
+    border: 1px solid #ecf0f5;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    box-shadow: inset 1px 2px 1px 0 #C9C9C9;
+    content: "";
+    margin-left: -24px;
+    position: absolute;
+    top: -5px;
+}
+
+.styled-radio label:before,
+.styled-radio label::before{
+    border-radius: 50%;
+}
+
+form input[type="checkbox"],
+form input[type="radio"]{
+    opacity: 0;
+    z-index: 200;
+    position: absolute;
+    left: 2px;
+    top: 1px;
+}
+
+.styled-checkbox label:after,
+.styled-checkbox label::after,
+.styled-radio label:after,
+.styled-radio label::after{
+    display: inline-block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin-left: -19px;
+    padding-left: 3px;
+    padding-top: 1px;
+    font-size: 12px;
+    color: #555555;
+    top: -5px;
+    left: 1px;
+    font-weight: normal;
+}
+
+.styled-checkbox input[type=checkbox]:checked + label:after,
+.styled-checkbox input[type=checkbox]:checked + label::after{
+    font-family: 'FontAwesome';
+    content: "\f00c";
+}
+
+.styled-radio input[type=radio]:checked + label:after,
+.styled-radio input[type=radio]:checked + label::after{
+    font-family: 'FontAwesome';
+    content: "\f111";
+    font-size: 8px;
+    top: 2px;
+    padding-left: 5px;
+    padding-top: 4px;
+}
+.styled-checkbox label:after,
+.styled-checkbox label::after{
+    top: 4px;
+}
+
+.styled-checkbox label:before,
+.styled-checkbox label::before,
+.styled-radio label:before,
+.styled-radio label::before{
+    top: 2px;
+    border: 1px solid #999999;
+}
+
+.tab-content > .active{
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0 0px 10px 10px;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    padding: 10px;
+}
+
+.gauss-result{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 30px
+}

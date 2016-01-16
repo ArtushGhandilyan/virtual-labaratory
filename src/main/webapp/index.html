@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app="laboratory">
+<head>
+    <meta charset="UTF-8">
+    <title>Virtual Laboratory</title>
+    <base href="/">
+
+    <!-- Favicon icon -->
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon"/>
+
+    <!-- Fonts CSS -->
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/assets/styles/segoe-ui-symbol.css" media="screen"/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="/assets/styles/laboratory.css"/>
+
+    <!-- AngularJS -->
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/angular-messages/angular-messages.js"></script>
+    <script src="/bower_components/ngstorage/ngStorage.min.js"></script>
+
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/bower_components/angular-ui-validate/dist/validate.min.js"></script>
+
+    <!-- Google charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!-- Main module -->
+    <script src="/main/app.module.js"></script>
+    <script src="/main/app.config.js"></script>
+    <script src="/main/app.routes.js"></script>
+    <script src="/main/app.controller.js"></script>
+
+    <!-- Controllers -->
+    <script src="/main/components/pages/login/login.controller.js"></script>
+    <script src="/main/components/pages/experiments/experiments.controller.js"></script>
+    <script src="/main/components/pages/experiments/gauss/gauss.controller.js"></script>
+    <script src="/main/components/pages/users/users.controller.js"></script>
+    <script src="/main/components/pages/users/dialogs/create-update/user-dialog.controller.js"></script>
+    <script src="/main/components/pages/users/dialogs/delete/delete-user.controller.js"></script>
+    <script src="/main/components/pages/roles/roles.controller.js"></script>
+    <script src="/main/components/layout/header/header.controller.js"></script>
+    <script src="/main/components/dialogs/general-error/general-error.controller.js"></script>
+
+    <!-- Services -->
+    <script src="/main/services/http.interceptor.js"></script>
+    <script src="/main/services/auth.service.js"></script>
+    <script src="/main/services/user.service.js"></script>
+    <script src="/main/services/role.service.js"></script>
+    <script src="/main/services/event.service.js"></script>
+    <script src="/main/services/navigation.service.js"></script>
+    <script src="/main/services/error-handler.service.js"></script>
+    <script src="/main/services/util.service.js"></script>
+
+    <!-- Directives -->
+    <script src="/main/directives/page-loader/page-loader.directive.js"></script>
+    <script src="/main/directives/password-confirmation/password-verify.directive.js"></script>
+    <script src="/main/directives/form-general-error/form-general-error.directive.js"></script>
+    <script src="/main/directives/top-header/top-header.directive.js"></script>
+
+    <!-- Filters -->
+    <script src="/main/filters/property-values.filter.js"></script>
+    <script src="/main/filters/value-of.filter.js"></script>
+    <script src="/main/filters/concatenate.filter.js"></script>
+    <script src="/main/filters/replace-in-string.filter.js"></script>
+
+</head>
+<body ng-controller="AppController as ac" ng-show="ac.ready">
+    <top-header></top-header>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="main">
+                <ng-view></ng-view>
+            </div>
+        </div>
+    </div>
+    <page-loader></page-loader>
+</body>
+
+</html>
+
+
+
+
+
+
+
+

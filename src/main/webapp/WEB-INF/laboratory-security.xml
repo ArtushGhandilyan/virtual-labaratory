@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security-4.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <context:component-scan base-package="ru.mipt1c.laboratory.security"/>
+
+    <security:http entry-point-ref="restAuthenticationEntryPoint" authentication-manager-ref="authenticationManager"
+                   auto-config="false" use-expressions="false" access-decision-manager-ref="accessDecisionManager">
+
+        <security:csrf disabled="true"/>
+        <security:anonymous enabled="false"/>
+
+        <security:form-login login-processing-url="/rest/login"
+                    authentication-failure-handler-ref="restAuthenticationFailureHandler"
+                    authentication-success-handler-ref="restAuthenticationSuccessHandler"
+                    username-parameter="username"
+                    password-parameter="password"/>
+
+        <security:logout logout-url="/rest/logout"
+                success-handler-ref="restLogoutSuccessHandler"
+                delete-cookies="JSESSIONID" invalidate-session="false"/>
+
+        <security:intercept-url pattern="/rest/*" access="LOGGED_ON_USER"/>
+        <security:intercept-url pattern="/rest/users" access="MANAGE_USERS"/>
+        <security:intercept-url pattern="/rest/roles" access="MANAGE_ROLES"/>
+
+        <security:access-denied-handler ref="restAccessDeniedHandler"/>
+
+        <security:session-management session-fixation-protection="migrateSession">
+            <security:concurrency-control max-sessions="1"/>
+        </security:session-management>
+    </security:http>
+
+    <security:authentication-manager id="authenticationManager">
+        <security:authentication-provider user-service-ref="laboratoryUserDetailsService">
+            <security:password-encoder hash="sha-256"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <bean id="restAuthenticationEntryPoint" class="ru.mipt1c.laboratory.security.RestAuthenticationEntryPoint"/>
+    <bean id="restLogoutSuccessHandler" class="ru.mipt1c.laboratory.security.RestLogoutSuccessHandler"/>
+    <bean id="restAuthenticationFailureHandler" class="ru.mipt1c.laboratory.security.RestAuthenticationFailureHandler"/>
+    <bean id="restAuthenticationSuccessHandler" class="ru.mipt1c.laboratory.security.RestAuthenticationSuccessHandler"/>
+    <bean id="restAccessDeniedHandler" class="ru.mipt1c.laboratory.security.RestAccessDeniedHandler"/>
+
+    <bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+        <constructor-arg name="decisionVoters">
+            <list>
+                <!--<ref bean="changeAuthoritiesVoter"/>-->
+                <bean class="org.springframework.security.access.vote.RoleVoter">
+                    <property name="rolePrefix" value=""/>
+                </bean>
+            </list>
+
+        </constructor-arg>
+    </bean>
+</beans>
+
+
+
+
