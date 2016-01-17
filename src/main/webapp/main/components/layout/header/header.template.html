@@ -15,7 +15,7 @@
     </ul>
 
     <div class="header-right" ng-if="ac.userInfo">
-        <span class="notification glyphicon glyphicon-bell">
+        <span class="notification glyphicon glyphicon-bell" ng-if="!ac.userInfo.isGuest">
             <span class="number">5</span>
         </span>
 
@@ -28,8 +28,7 @@
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu uib-dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
+                <li ng-if="!ac.userInfo.isGuest"><a href="#">Profile</a></li>
                 <li><a href="#" ng-click="hc.performLogout()" class="logout" title="Logout">Log out</a></li>
             </ul>
         </div>

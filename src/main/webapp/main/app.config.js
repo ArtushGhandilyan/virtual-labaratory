@@ -12,39 +12,16 @@
         })
         .constant('Page', {
             LOGIN: 'login',
-            EXPERIMENTS: 'experiments',
             USERS: 'users',
             ROLES: 'roles',
-
+            EXPERIMENTS: 'experiments',
             GAUSS: 'gauss'
-        })
-        .constant('NotificationScheduleTypes', {
-            NO_SCHEDULE: 0,
-            SPECIFIC_TIME: 1,
-            SKILL_COMPLETION_PROGRESS: 2,
-            LEARNER_INACTIVITY: 3,
-            LEARNER_PROGRESS: 4
-        })
-        .constant('SkillCompletionProgressIntervals', {
-            NEVER_LOGGED_IN: 0,
-            LESS_THAN_10_PERCENT: 1,
-            BETWEEN_10_AND_50_PERCENT: 2,
-            BETWEEN_50_AND_95_PERCENT: 3,
-            BETWEEN_95_AND_99_PERCENT: 4,
-            EXACTLY_100_PERCENT: 5
-        })
-        .constant('LoadStates', {
-            LOADING: 'loading',
-            LOADED: 'loaded',
-            ERROR: 'error'
         })
         .constant('EventTypes', {
             LOGIN_SUCCESS: 'loginSuccess',
             LOGOUT_SUCCESS: 'logoutSuccess',
             LOGIN_ERROR: 'loginError',
             LOGOUT_ERROR: 'logoutError',
-
-            USER_REGISTERED: 'userRegistered',
 
             ACCESS_DENIED: 'accessDenied',
             SESSION_EXPIRED: 'sessionExpired',
@@ -67,6 +44,7 @@
         .constant('Role', {
             STUDENT: 1,
             TEACHER: 2,
-            ADMIN: 3
+            ADMIN: 3,
+            GUEST: 3
         });
 })();

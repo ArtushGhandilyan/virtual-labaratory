@@ -27,4 +27,8 @@ public class GaussExperimentDBManager {
     public List<GaussExperimentFilesDto> fetchFiles(GaussExperimentFilesCondition condition) {
         return gaussExperimentFilesDAO.selectByExample(condition);
     }
+
+    public void deleteFile(int fileId) {
+        gaussExperimentFilesDAO.deleteByPrimaryKey(fileId);
+    }
 }

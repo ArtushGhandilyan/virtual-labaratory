@@ -21,6 +21,7 @@ public class RestAuthenticationSuccessHandler implements AuthenticationSuccessHa
         authenticationSuccessResponseJson.addResponseParam("firstName", userDetails.getFirstName());
         authenticationSuccessResponseJson.addResponseParam("lastName", userDetails.getLastName());
         authenticationSuccessResponseJson.addResponseParam("isEnabled", userDetails.isEnabled());
+        authenticationSuccessResponseJson.addResponseParam("isGuest", userDetails.isGuest());
         authenticationSuccessResponseJson.addResponseParam("permissions", userDetails.getGrantedAuthority());
 
         RequestUtils.populateWithJSON(response, authenticationSuccessResponseJson);

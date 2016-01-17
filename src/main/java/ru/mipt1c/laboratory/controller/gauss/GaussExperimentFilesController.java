@@ -8,13 +8,10 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.mipt1c.laboratory.db.dto.GaussExperimentFilesDto;
 import ru.mipt1c.laboratory.model.asynch.json.AsynchResponseJson;
 import ru.mipt1c.laboratory.security.LaboratoryUserDetails;
-import ru.mipt1c.laboratory.service.ConfigProvider;
+import ru.mipt1c.laboratory.security.LaboratoryUserDetailsService;
 import ru.mipt1c.laboratory.service.GaussExperimentService;
 
 import javax.servlet.ServletException;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -54,12 +51,20 @@ public class GaussExperimentFilesController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<GaussExperimentFilesDto> getFiles(AbstractAuthenticationToken token) throws ServletException, IOException {
-        Integer userId = ((LaboratoryUserDetails) token.getPrincipal()).getUserId();
-        return gaussExperimentService.getFiles(userId);
+        LaboratoryUserDetails userDetails = (LaboratoryUserDetails) token.getPrincipal();
+        Integer userId = userDetails.getUserId();
+        boolean isGuest = userDetails.isGuest();
+
+        return gaussExperimentService.getFiles(userId, isGuest);
     }
 
-    @RequestMapping(value = "/{fileId}")
-    public List<List<Integer>> loadFile(@PathVariable int fileId) {
+    @RequestMapping(value = "/{fileId}", method = RequestMethod.GET)
+    public List<List<Float>> loadFile(@PathVariable int fileId) {
         return gaussExperimentService.loadFile(fileId);
+    }
+
+    @RequestMapping(value = "/{fileId}", method = RequestMethod.DELETE)
+    public void deleteFile(@PathVariable int fileId) {
+        gaussExperimentService.deleteFile(fileId);
     }
 }

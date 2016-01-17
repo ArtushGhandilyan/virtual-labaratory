@@ -12,6 +12,7 @@
         self.loginErrorMessage = null;
         self.credential = {};
         self.performLogin = performLogin;
+        self.loginAsGuest = loginAsGuest;
 
         registerEventListeners();
         eventService.sendEvent(EventTypes.PAGE_LOADED);
@@ -23,6 +24,10 @@
 
         function performLogin() {
             authService.login(self.credential.username, self.credential.password);
+        }
+
+        function loginAsGuest() {
+            authService.login('guest@test.com', 'password');
         }
 
         function loginErrorHandler(event, error) {

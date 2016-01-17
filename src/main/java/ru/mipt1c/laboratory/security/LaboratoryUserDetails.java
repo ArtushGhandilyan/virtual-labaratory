@@ -15,10 +15,13 @@ public class LaboratoryUserDetails implements UserDetails {
     private String firstName;
     private String lastName;
 
+    private Integer roleId;
+    private boolean isGuest;
+
     private boolean isEnabled;
 
-    private Collection<GrantedAuthority> grantedAuthority;
 
+    private Collection<GrantedAuthority> grantedAuthority;
 
     public Integer getUserId() {
         return userId;
@@ -66,6 +69,22 @@ public class LaboratoryUserDetails implements UserDetails {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public boolean isGuest() {
+        return isGuest;
+    }
+
+    public void setIsGuest(boolean isGuest) {
+        this.isGuest = isGuest;
     }
 
     public void setEnabled(boolean enabled) {

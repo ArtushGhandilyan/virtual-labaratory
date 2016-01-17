@@ -42,29 +42,34 @@ public class GaussExperimentService {
         } catch (Exception e) {
             LOGGER.error("Error with saving file into the file system.");
             LOGGER.info("Rollback file upload operation.");
-//            gaussExperimentDBManager.deleteFile(fileId);
+            gaussExperimentDBManager.deleteFile(fileId);
             return null;
         }
 
         return fileId;
     }
 
-    public List<GaussExperimentFilesDto> getFiles(Integer userId) {
+    public List<GaussExperimentFilesDto> getFiles(Integer userId, boolean isGuest) {
         GaussExperimentFilesCondition condition = new GaussExperimentFilesCondition();
 
-        GaussExperimentFilesCondition.Criteria privateFiles = condition.createCriteria();
-        privateFiles.andUseridEqualTo(userId);
+        if(isGuest) {
+            GaussExperimentFilesCondition.Criteria publicFiles = condition.createCriteria();
+            publicFiles.andAccessEqualTo(2);
+        } else {
+            GaussExperimentFilesCondition.Criteria privateFiles = condition.createCriteria();
+            privateFiles.andUseridEqualTo(userId);
 
-        GaussExperimentFilesCondition.Criteria publicFiles = condition.createCriteria();
-        publicFiles.andAccessNotEqualTo(0);
+            GaussExperimentFilesCondition.Criteria publicAndProtectedFiles = condition.createCriteria();
+            publicAndProtectedFiles.andAccessNotEqualTo(0);
 
-        condition.or(publicFiles);
+            condition.or(publicAndProtectedFiles);
+        }
 
         return gaussExperimentDBManager.fetchFiles(condition);
     }
 
-    public List<List<Integer>> loadFile(int fileId) {
-        List<List<Integer>> uniformDistributionNumbersArray = new ArrayList<>();
+    public List<List<Float>> loadFile(int fileId) {
+        List<List<Float>> uniformDistributionNumbersArray = new ArrayList<>();
 
         String csvFile = ConfigProvider.getGaussFilesBaseFolderPath() + fileId + ".csv";
         BufferedReader br = null;
@@ -76,9 +81,9 @@ public class GaussExperimentService {
             while ((line = br.readLine()) != null) {
                 String[] numbers = line.split(",");
 
-                List<Integer> uniformDistributionNumbers = new ArrayList<>();
+                List<Float> uniformDistributionNumbers = new ArrayList<>();
                 for (String number : numbers) {
-                    uniformDistributionNumbers.add(Integer.parseInt(number));
+                    uniformDistributionNumbers.add(Float.parseFloat(number));
                 }
 
                 uniformDistributionNumbersArray.add(uniformDistributionNumbers);
@@ -99,5 +104,9 @@ public class GaussExperimentService {
         }
 
         return uniformDistributionNumbersArray;
+    }
+
+    public void deleteFile(int fileId) {
+        gaussExperimentDBManager.deleteFile(fileId);
     }
 }

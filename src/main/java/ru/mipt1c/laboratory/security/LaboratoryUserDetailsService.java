@@ -21,6 +21,8 @@ public class LaboratoryUserDetailsService implements UserDetailsService {
 
     private static Logger LOGGER = Logger.getLogger(LaboratoryUserDetailsService.class);
 
+    public static final String LOGGED_ON_USER = "LOGGED_ON_USER";
+
     @Autowired
     private UserService userService;
 
@@ -59,11 +61,18 @@ public class LaboratoryUserDetailsService implements UserDetailsService {
         LaboratoryUserDetails userDetails = new LaboratoryUserDetails();
 
         List<GrantedAuthority> rpGAList = new ArrayList<GrantedAuthority>();
+
+        rpGAList.add(new SimpleGrantedAuthority(LOGGED_ON_USER));
+
+        // Add permissions
         List<String> permissions = permissionService.getPermissionsByRoleId(userDto.getRoleId());
         for (String permission : permissions) {
             rpGAList.add(new SimpleGrantedAuthority(permission));
         }
-        rpGAList.add(new SimpleGrantedAuthority("LOGGED_ON_USER"));
+        // Add guest for guest users.
+        if(userDto.getRoleId() == 4) {
+            userDetails.setIsGuest(true);
+        }
 
         userDetails.setUserId(userDto.getId());
         userDetails.setEnabled(userDto.getIsEnabled());

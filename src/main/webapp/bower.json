@@ -21,7 +21,8 @@
     "angular-messages": "~1.5.0",
     "angular-ui-validate": "~1.2.2",
     "ngstorage": "~0.3.10",
-    "angular-material": "~1.0.2"
+    "angular-material": "~1.0.2",
+    "bootstrap": "~3.3.6"
   },
   "resolutions": {
     "angular": "~1.4.5"

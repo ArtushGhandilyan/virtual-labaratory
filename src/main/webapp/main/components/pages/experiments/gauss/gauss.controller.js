@@ -4,15 +4,20 @@
     angular.module('laboratory')
         .controller('GaussController', GaussController);
 
-    GaussController.$inject = ['$q', '$uibModal', 'gaussService', 'eventService', 'EventTypes'];
+    GaussController.$inject = ['$scope', '$q', '$uibModal', 'gaussService', 'eventService', 'EventTypes'];
 
-    function GaussController($q, $uibModal, gaussService, eventService, EventTypes) {
+    function GaussController($scope, $q, $uibModal, gaussService, eventService, EventTypes) {
         var self = this;
 
+        self.accessNames = {
+            0: 'Private',
+            1: 'Protected',
+            2: 'Public'
+        };
         self.filesList = [];
 
-        self.fromFile = {};
-        self.fromFile.calculate = loadAndCalculate;
+        self.template = {};
+        self.template.calculate = loadAndCalculate;
 
         self.generate = {
             source: 10,
@@ -27,6 +32,7 @@
 
         self.result = {};
         self.openFileUploadDialog = openFileUploadDialog;
+        self.openFileDeleteDialog = openFileDeleteDialog;
 
         init();
 
@@ -190,10 +196,35 @@
                 });
         }
 
+        function openFileDeleteDialog(event, index) {
+            event.preventDefault();
+
+            var selectedFile = angular.copy(self.filesList[index]);
+            var selectedFileIndex = index;
+
+            var dc = $scope.$new();
+            dc.file = selectedFile;
+
+            var dialog = $uibModal.open({
+                templateUrl: '/main/components/pages/experiments/gauss/dialogs/file-delete/file-delete.template.html',
+                controller: 'GaussFileDeleteController',
+                controllerAs: 'dc',
+                scope: dc
+            });
+
+            dialog.result
+                .then(function() {
+                    self.filesList.splice(selectedFileIndex, 1);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+
         function loadAndCalculate() {
             self.result.startTime = new Date().getTime();
 
-            var fileId = self.fromFile.fileId;
+            var fileId = self.template.fileId;
             gaussService.loadFile(fileId)
                 .then(function(response) {
                     var uniformDistributionNumbersArray = response.data;

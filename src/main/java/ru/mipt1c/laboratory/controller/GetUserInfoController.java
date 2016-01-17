@@ -27,6 +27,7 @@ public class GetUserInfoController {
         authenticationSuccessResponseJson.addResponseParam("email", userDetails.getUserEmail());
         authenticationSuccessResponseJson.addResponseParam("firstName", userDetails.getFirstName());
         authenticationSuccessResponseJson.addResponseParam("lastName", userDetails.getLastName());
+        authenticationSuccessResponseJson.addResponseParam("isGuest", userDetails.isGuest());
         authenticationSuccessResponseJson.addResponseParam("isEnabled", userDetails.isEnabled());
         authenticationSuccessResponseJson.addResponseParam("permissions", userDetails.getGrantedAuthority());
 

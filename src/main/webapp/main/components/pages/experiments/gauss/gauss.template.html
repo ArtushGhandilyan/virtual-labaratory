@@ -34,27 +34,24 @@
                 </div>
             </form>
         </uib-tab>
-        <uib-tab heading="From file">
-            <form name="fromFile" novalidate>
+        <uib-tab heading="Template">
+            <form name="template" novalidate>
                 <div class="form-group row">
                     <div class="col-md-3">
-                        <label>Files:</label>
-                        <select class="selectpicker form-control" title="File" ng-model="vc.fromFile.fileId">
-                            <option value="">Select a file</option>
+                        <label>Templates:</label>
+                        <select class="selectpicker form-control" name="fileId" title="Template" ng-model="vc.template.fileId" ng-required="true">
+                            <option value="">Select a template</option>
                             <option value="{{file.id}}" ng-repeat="file in vc.filesList">{{file.name}}</option>
                         </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Add a new files:</label>
-                        <button class="btn btn-default form-control" type="button"
-                                ng-click="vc.openFileUploadDialog();">Upload file</button>
+                        <span ng-messages="template.fileId.$error" ng-show="template.$submitted" class="input-error-msg">
+                            <span ng-message="required">Template is required</span>
+                        </span>
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <div class="col-md-3">
                         <button class="btn btn-default" type="submit"
-                                ng-click="fromFile.$valid && vc.fromFile.calculate()">Load and Calculate</button>
+                                ng-click="template.$valid && vc.template.calculate()">Load and Calculate</button>
                     </div>
                 </div>
             </form>
@@ -96,6 +93,36 @@
                         <label for="entropy">Calculate entropy</label>
                     </div>
                 </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Manage Files" ng-if="!ac.userInfo.isGuest">
+            <div class="table-wrap">
+                <form class="form-horizontal">
+                    <div class="form-group row">
+                        <div class="col-md-2 col-md-push-10">
+                            <button class="btn btn-default form-control" type="button"
+                                    ng-click="vc.openFileUploadDialog();">Add new</button>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Template</th>
+                            <th>Access</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="file in vc.filesList">
+                            <td>{{file['name']}}</td>
+                            <td>{{vc.accessNames[file['access']]}}</td>
+                            <td>
+                                <a href="#" class="glyphicon glyphicon-remove delete-row tb-btns" ng-click="vc.openFileDeleteDialog($event, $index)"></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </uib-tab>
     </uib-tabset>
