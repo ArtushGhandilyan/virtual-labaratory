@@ -38,4 +38,10 @@
         <property name="basePackage" value="ru.mipt1c.laboratory.db.dao"/>
     </bean>
 
+    <!--DB Managers-->
+    <bean id="configDBManager" class="ru.mipt1c.laboratory.db.ConfigDBManager">
+        <property name="configPropertyDao" ref="configPropertyDAO"/>
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
 </beans>

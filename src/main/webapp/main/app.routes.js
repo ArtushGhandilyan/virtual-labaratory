@@ -13,14 +13,14 @@
                 name: Page.LOGIN,
                 controller: 'LoginController',
                 controllerAs: 'vc',
-                templateUrl: '/main/components/pages/login/login.html',
+                templateUrl: '/main/components/pages/login/login.template.html',
                 requireAuth: false
             })
             .when('/experiments', {
                 name: Page.EXPERIMENTS,
                 controller: 'ExperimentsController',
                 controllerAs: 'vc',
-                templateUrl: '/main/components/pages/experiments/experiments.html',
+                templateUrl: '/main/components/pages/experiments/experiments.template.html',
                 menu: {
                     title: 'Experiments'
                 }
@@ -29,13 +29,13 @@
                 name: Page.GAUSS,
                 controller: 'GaussController',
                 controllerAs: 'vc',
-                templateUrl: '/main/components/pages/experiments/gauss/gauss.html'
+                templateUrl: '/main/components/pages/experiments/gauss/gauss.template.html'
             })
             .when('/users', {
                 name: Page.USERS,
                 controller: 'UsersController',
                 controllerAs: 'vc',
-                templateUrl: '/main/components/pages/users/users.html',
+                templateUrl: '/main/components/pages/users/users.template.html',
                 requirePermissions: ['MANAGE_USERS'],
                 menu: {
                     title: 'Users'
@@ -45,7 +45,7 @@
                 name: Page.ROLES,
                 controller: 'RolesController',
                 controllerAs: 'vc',
-                templateUrl: '/main/components/pages/roles/roles.html',
+                templateUrl: '/main/components/pages/roles/roles.template.html',
                 requirePermissions: ['MANAGE_ROLES'],
                 menu: {
                     title: 'Roles'

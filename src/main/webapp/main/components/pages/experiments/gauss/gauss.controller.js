@@ -4,15 +4,54 @@
     angular.module('laboratory')
         .controller('GaussController', GaussController);
 
-    GaussController.$inject = [];
+    GaussController.$inject = ['$q', '$uibModal', 'gaussService', 'eventService', 'EventTypes'];
 
-    function GaussController() {
+    function GaussController($q, $uibModal, gaussService, eventService, EventTypes) {
         var self = this;
 
-        self.generate = {};
-        self.generate.calculate = calculate;
-        self.setting = {};
+        self.filesList = [];
+
+        self.fromFile = {};
+        self.fromFile.calculate = loadAndCalculate;
+
+        self.generate = {
+            source: 10,
+            elements: 1000,
+            calculate : calculate
+        };
+
+        self.setting = {
+            backgroundColor: 'white',
+            diagramColor: 'black'
+        };
+
         self.result = {};
+        self.openFileUploadDialog = openFileUploadDialog;
+
+        init();
+
+        function init() {
+            eventService.sendEvent(EventTypes.PAGE_LOADING);
+
+            var getFiles = gaussService.getFiles();
+            $q.all([getFiles])
+                .then(function (results) {
+                    self.filesList = results[0].data;
+                })
+                .catch(function (e) {
+
+                })
+                .finally(function () {
+                    eventService.sendEvent(EventTypes.PAGE_LOADED);
+                });
+
+
+            try {
+                google.charts.load("current", {packages:["corechart"]});
+            } catch(e) {
+
+            }
+        }
 
         function calculate() {
             var numberOfSources = self.generate.source;
@@ -24,6 +63,13 @@
 
         function generate(numberOfSources, numberOfElements) {
             var uniformDistributionNumbersArray = generateUniformDistributionNumbers(numberOfSources, numberOfElements);
+            calculateNormalDistributedNumbers(uniformDistributionNumbersArray);
+        }
+
+        function calculateNormalDistributedNumbers(uniformDistributionNumbersArray) {
+            var numberOfSources = uniformDistributionNumbersArray.length;
+            var numberOfElements = uniformDistributionNumbersArray[0].length;
+
             var normalDistributedNumbers = [];
             for (var p = 0; p < numberOfElements; p++) {
                 var sum = 0;
@@ -79,52 +125,31 @@
                 var expectedValue = parseFloat(params.expectedValue) || 0;
                 var deviation = parseFloat(params.deviation) || 0;
                 var gradY = parseFloat(params.gradY) || 0;
+
                 var array = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                var result = [['Number']];
                 for (var k = 0; k < numbers.length; k++) {
                     var round = Math.floor(numbers[k] / gradY - (min / gradY));
                     array[(round == 10) ? 9 : round]++;
+                    result.push([numbers[k]]);
                 }
-                //showHistogram(array, min, gradY);
+                showHistogram(result);
                 showResult(array, numberOfElements, expectedValue, deviation);
-
             }
         }
 
-        function showHistogram(array, min, gradY) {
-            var data = google.visualization.arrayToDataTable([
-                ['Dinosaur', 'Length'],
-                ['Acrocanthosaurus (top-spined lizard)', 12.2],
-                ['Albertosaurus (Alberta lizard)', 9.1],
-                ['Allosaurus (other lizard)', 12.2],
-                ['Apatosaurus (deceptive lizard)', 22.9],
-                ['Archaeopteryx (ancient wing)', 0.9],
-                ['Argentinosaurus (Argentina lizard)', 36.6],
-                ['Baryonyx (heavy claws)', 9.1],
-                ['Brachiosaurus (arm lizard)', 30.5],
-                ['Ceratosaurus (horned lizard)', 6.1],
-                ['Coelophysis (hollow form)', 2.7],
-                ['Compsognathus (elegant jaw)', 0.9],
-                ['Deinonychus (terrible claw)', 2.7],
-                ['Diplodocus (double beam)', 27.1],
-                ['Dromicelomimus (emu mimic)', 3.4],
-                ['Gallimimus (fowl mimic)', 5.5],
-                ['Mamenchisaurus (Mamenchi lizard)', 21.0],
-                ['Megalosaurus (big lizard)', 7.9],
-                ['Microvenator (small hunter)', 1.2],
-                ['Ornithomimus (bird mimic)', 4.6],
-                ['Oviraptor (egg robber)', 1.5],
-                ['Plateosaurus (flat lizard)', 7.9],
-                ['Sauronithoides (narrow-clawed lizard)', 2.0],
-                ['Seismosaurus (tremor lizard)', 45.7],
-                ['Spinosaurus (spiny lizard)', 12.2],
-                ['Supersaurus (super lizard)', 30.5],
-                ['Tyrannosaurus (tyrant lizard)', 15.2],
-                ['Ultrasaurus (ultra lizard)', 30.5],
-                ['Velociraptor (swift robber)', 1.8]]);
+        function showHistogram(array) {
+            var data = google.visualization.arrayToDataTable(array);
 
             var options = {
-                title: 'Lengths of dinosaurs, in meters',
-                legend: { position: 'none' }
+                legend: { position: 'none' },
+                colors: [self.setting.diagramColor],
+                backgroundColor: self.setting.backgroundColor,
+                vAxis: {
+                    gridlines: {
+                        count: self.setting.showGrid ? 10 : 0
+                    }
+                }
             };
 
             var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
@@ -149,6 +174,34 @@
             return entropy.toFixed(2);
         }
 
+        function openFileUploadDialog() {
+            var dialog = $uibModal.open({
+                templateUrl: '/main/components/pages/experiments/gauss/dialogs/file-upload/file-upload.template.html',
+                controller: 'GaussFileUploadController',
+                controllerAs: 'dc'
+            });
 
+            dialog.result
+                .then(function(file) {
+                    self.filesList.push(file);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+
+        function loadAndCalculate() {
+            self.result.startTime = new Date().getTime();
+
+            var fileId = self.fromFile.fileId;
+            gaussService.loadFile(fileId)
+                .then(function(response) {
+                    var uniformDistributionNumbersArray = response.data;
+                    calculateNormalDistributedNumbers(uniformDistributionNumbersArray);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
     }
 })();

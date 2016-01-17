@@ -50,6 +50,12 @@
             <generatedKey column="id" sqlStatement="MYSQL" identity="true"/>
         </table>
         <table tableName="role_permission" />
+        <table tableName="config_property">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true"/>
+        </table>
+        <table tableName="gauss_experiment_files">
+            <generatedKey column="id" sqlStatement="MYSQL" identity="true"/>
+        </table>
     </context>
 </generatorConfiguration>
 

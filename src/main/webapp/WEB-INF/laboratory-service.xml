@@ -23,4 +23,8 @@
 
     <mvc:annotation-driven/>
 
+    <bean id="configProvider" class="ru.mipt1c.laboratory.service.ConfigProvider">
+        <constructor-arg ref="configDBManager"/>
+    </bean>
+
 </beans>

@@ -1,0 +1,52 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close"  aria-label="Close" ng-click="dc.cancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">FILE UPLOAD</h4>
+    </div>
+    <form name="fileUploadForm" novalidate>
+        <div class="modal-body">
+            <div class="alert alert-danger" ng-if="fileUploadForm.$invalid && fileUploadForm.$submitted">
+                <span class="glyphicon glyphicon-flag"></span>
+                Please select a CSV file for upload
+            </div>
+            <div class="form-group file-upload">
+                <label>Choose file:<span>(Only CSV file format can be used)</span></label>
+                <div class="btn-default primary-button">Choose file
+                    <input type="file" name="myFile" ng-model="dc.data.csvFile.name" file-model="dc.data.csvFile" ng-required="true"/></div>
+                <span ng-hide="dc.data.csvFile">No file selected</span>
+                <span ng-show="dc.data.csvFile">{{dc.data.csvFile.name}}</span>
+            </div>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" ng-model="dc.data.name" ng-required="true"/>
+                <span ng-messages="fileUploadForm.name.$error" ng-show="fileUploadForm.$submitted" class="input-error-msg">
+                    <span ng-message="required">Name is required</span>
+                </span>
+            </div>
+            <div class="form-group">
+                <div class="styled-radio">
+                    <input id="private" type="radio" value="0" ng-model="dc.data.access"/>
+                    <label for="private">Private (Only You can use this file)</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="styled-radio">
+                    <input id="registered" type="radio" value="1" ng-model="dc.data.access"/>
+                    <label for="registered">Protected (Only registered users can use this file)</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="styled-radio">
+                    <input id="public" type="radio" value="2" ng-model="dc.data.access"/>
+                    <label for="public">Public (Everybody can use this file)</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" ng-click="dc.cancel()">CANCEL</button>
+            <button class="btn btn-default" type="submit" ng-click="fileUploadForm.$valid && dc.submit()">UPLOAD</button>
+        </div>
+    </form>
+</div>
